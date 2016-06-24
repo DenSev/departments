@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="by.dsev.departments.dao.EmployeeDao">
+    
+    <resultMap type="employee" id="employee">
+        <id column="id" property="id"/>
+        <result column="full_name" property="fullName"/>
+        <result column="date_of_birth" property="dob"/>
+        <result column="salary" property="salary"/>
+        <result column="department_id" property="departmentId"/>
+    </resultMap>
+
+    <resultMap type="employeeView" id="employeeView">
+        <id column="id" property="id"/>
+        <result column="full_name" property="fullName"/>
+        <result column="date_of_birth" property="dob"/>
+        <result column="salary" property="salary"/>
+        <result column="department" property="department"/>
+    </resultMap>
+
+
+    <insert id="create" parameterType="employee" keyProperty="id">
+        INSERT INTO ${db.schema}.employees
+          (full_name, date_of_birth, salary, department_id)
+        VALUES (#{fullName}, #{dob}, #{salary}, #{departmentId})
+    </insert>
+
+    <select id="read" resultMap="employee" parameterType="long">
+         SELECT * 
+         FROM ${db.schema}.employees 
+         WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="employee">
+        UPDATE ${db.schema}.employees 
+        SET
+          full_name = #{fullName},
+          date_of_birth = #{dob},
+          salary = #{salary},
+          department_id = #{departmentId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE
+        FROM ${db.schema}.employees
+        WHERE id = #{id}
+    </delete>
+
+    <select id="readAll" resultMap="employee">
+         SELECT * 
+         FROM ${db.schema}.employees 
+         ORDER BY id
+    </select>
+    
+    <select id="readAllViews" resultMap="employeeView">
+        SELECT e.id, full_name, date_of_birth, salary, d.name as department
+        FROM ${db.schema}.employees e
+        LEFT JOIN ${db.schema}.departments d ON department_id = d.id
+        ORDER BY e.id
+    </select>
+    
+    <select id="readAllViewsByDepartmentId" resultMap="employeeView" parameterType="long">
+        SELECT e.id, full_name, date_of_birth, salary, d.name as department
+        FROM ${db.schema}.employees e
+        LEFT JOIN ${db.schema}.departments d ON department_id = d.id
+        WHERE e.department_id = #{id}
+        ORDER BY e.id
+    </select>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <!-- Base definitions -->
+
+    <definition name=".base-template" template="/WEB-INF/jsp/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
+    </definition>
+
+    <definition name=".index" extends=".base-template">
+        <put-attribute name="content" value="/WEB-INF/jsp/content.jsp" />
+    </definition>
+
+    <definition name=".list" extends=".base-template">
+        <put-attribute name="content" value="/WEB-INF/jsp/list.jsp" cascade="true" />
+    </definition>
+
+    <definition name=".rest_template" extends=".base-template">
+        <put-attribute name="content" value="/WEB-INF/jsp/rest_template.jsp" />
+    </definition>
+
+    <definition name=".department" extends=".base-template">
+        <put-attribute name="content" value="/WEB-INF/jsp/department.jsp" />
+    </definition>
+
+    <definition name=".employee" extends=".base-template">
+        <put-attribute name="content" value="/WEB-INF/jsp/employee.jsp" />
+    </definition>
+
+    <definition name=".search-results" extends=".base-template">
+        <put-attribute name="content" value="/WEB-INF/jsp/search_results.jsp" />
+    </definition>
+
+</tiles-definitions>

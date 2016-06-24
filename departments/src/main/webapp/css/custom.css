@@ -1,0 +1,126 @@
+html{
+    height:100%;
+}
+
+body{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:100%;
+}
+header{
+    display:flex;
+}
+main{
+    display:flex;
+    flex-grow:1;
+    margin-top:70px;
+}
+footer{
+    display:flex;
+}
+.panel-footer{
+    width:100%;
+}
+.row{
+    width: 100%;
+}
+.emp-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    height:100%;
+}
+.emp-item{
+    display:flex;
+    flex-direction:column;
+    align-content:flex-end;
+    margin-top:5px;
+    margin-bottom:5px;
+    width:100%;
+}
+.emp-sub-item{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+}
+.emp-new{
+    display:flex;
+    justify-content:flex-end;
+    margin-right: 15px;
+}
+.disabled span.glyphicon{
+    color: #bbb;
+}
+
+.dep-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    height:100%;
+}
+.dep-item{
+    display:flex;
+    flex-direction:column;
+    align-content:flex-end;
+    margin-top:5px;
+    margin-bottom:5px;
+    width:100%;
+}
+.dep-sub-item{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+}
+.dep-new{
+    display:flex;
+    justify-content:flex-end;
+    margin-right: 15px;
+}
+.alert{
+    margin-bottom:10px;
+    margin-top:10px;
+    padding:10px;
+}
+.hidden{
+    display:none;
+}
+.tab-new-button{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+.tab-content{
+    margin-top:50px;
+    margin-bottom:50px;
+}
+.form-group{
+    margin-bottom:10px;
+}
+.delete-modal-buttons{
+    display:flex;
+}
+.delete-modal-buttons button{
+    width:50%;
+}
+
+.custom-heading{
+    display:flex;
+    justify-content:space-between;
+}
+.custom-heading .input-group{
+    width:30%;
+}
+.custom-heading .input-group .form-control{
+    width:50%;
+}
+.custom-heading form .input-group{
+    width:100%;
+}
+.custom-heading form{
+    width:30%;
+}
+span.alert-danger{
+    display:block;
+}

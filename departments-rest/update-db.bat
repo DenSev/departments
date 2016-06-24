@@ -1,0 +1,1 @@
+mvn -P liquibase clean initialize liquibase:update

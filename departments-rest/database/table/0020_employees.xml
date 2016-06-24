@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0020_employees.xml">
+
+    <changeSet id="0.0.1_0020" author="Denis Sevosteenko">
+        <comment>Create table "employees"</comment>
+        <createTable tableName="employees" schemaName="${db.schema}">
+            <column name="id" type="bigint"  autoIncrement="true"  remarks="id" >
+                <constraints primaryKey="true" primaryKeyName="pk_employees" nullable="false" />
+            </column>
+            <column name="full_name" type="varchar(100)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_birth" type="date"/>
+            <column name="salary" type="bigint"/>
+            <column name="department_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="employees" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="0.0.1_0021" author="Denis Sevosteenko">
+        <comment>Add foreign key "fk_department_id"</comment>
+        <addForeignKeyConstraint    constraintName="fk_department_id" 
+                                    baseTableSchemaName="${db.schema}"
+                                    baseColumnNames="department_id"
+                                    baseTableName="employees"
+                                    referencedTableSchemaName="${db.schema}"
+                                    referencedColumnNames="id"
+                                    referencedTableName="departments"/>
+        <rollback>
+            <dropForeignKeyConstraint   baseTableSchemaName="${db.schema}"
+                                        baseTableName="employees"
+                                        constraintName="fk_department_id"/>
+        </rollback>
+    </changeSet>
+    
+
+</databaseChangeLog>
