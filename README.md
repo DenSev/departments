@@ -22,6 +22,9 @@ To install the application you need:
 
 6. Start tomcat
 
+
 The client app will be available at: http://localhost:8080/departments
+
 The REST service will be available at http://localhost:8080/departments-rest
+
 Important! Note that client application requires that REST service is available at http://localhost:8080/departments-rest address, otherwise jsp version of client will not work.
