@@ -1,8 +1,11 @@
 The project was designed for management of departments and corresponding employees. It consists of two separate web applications: a client and a REST service. REST service is used to work with database and client provides a ui for user to interact with. 
 
 Requirements:
+
 	-Maven
+
 	-MySql server
+
 	-Tomcat
 
 To install the application you need:
