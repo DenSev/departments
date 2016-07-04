@@ -93,8 +93,9 @@ function loadDepartment(id){
         contentType : "application/json",
         dataType: 'json',
         type: "GET",
-        url: '/departments-rest/department.json?id=' + id,
+        url: '/departments-rest/dep/find/' + id,
         complete : function (data){
+            console.log(data)
             var department = processServerResponse(data.responseJSON, true);
             $('.modal-body').attr('id',department.id)
             $('#depName').val(department.name);
@@ -109,7 +110,7 @@ function loadEmployee(id){
         contentType : "application/json",
         dataType: 'json',
         type: "GET",
-        url: '/departments-rest/employee.json?id=' + id,
+        url: '/departments-rest/emp/find/' + id,
         complete : function (data){
             var employee = processServerResponse(data.responseJSON, true);
             var dob = moment(employee.dob);
@@ -144,14 +145,14 @@ function formDepartmentJSON(){
 }
 //------------------------------------------------------------------------clean inputs functions
 function cleanEmployeeInputs(){
-    $('#empModal .modal-body').attr('id','null');
+    $('#empModal .modal-body').attr('id','0');
     $('#empFullName').val('');
     $('#empDob').val('');
     $('#empSalary').val('');
     $('#empDepartmentId').val('');
 }
 function cleanDepartmentInputs(){
-    $('#depModal .modal-body').attr('id','null');
+    $('#depModal .modal-body').attr('id','0');
     $('#depName').val('');
 }
 //------------------------------------------------------------------------validation functions
@@ -211,7 +212,7 @@ function deleteDepartment(id){
         contentType : "application/json",
         dataType: "json",
         type : "DELETE",
-        url : "/departments-rest/department.json?id=" + id,
+        url : "/departments-rest/dep/remove/" + id,
         complete : function(data){
             processServerResponse(data.responseJSON, false);
             loadDepartments(1);
@@ -228,7 +229,7 @@ function deleteEmployee(id){
         contentType : "application/json",
         dataType: "json",
         type : "DELETE",
-        url : "/departments-rest/employee.json?id=" + id,
+        url : "/departments-rest/emp/remove/" + id,
         complete  : function(data){
             processServerResponse(data.responseJSON, false);
             loadDepartments(1);
@@ -246,7 +247,7 @@ function saveEmployee(employee){
         contentType : "application/json",
         dataType : 'json',
         type : "POST",
-        url : '/departments-rest/employee.json',
+        url : '/departments-rest/emp/save',
         data : JSON.stringify(employee),
         complete : function(data){
             processServerResponse(data.responseJSON, false);
@@ -265,7 +266,7 @@ function saveDepartment(department){
         contentType : "application/json",
         dataType : 'json',
         type : "POST",
-        url : '/departments-rest/department.json',
+        url : '/departments-rest/dep/save',
         data : JSON.stringify(department),
         complete : function(data){
             processServerResponse(data.responseJSON, false);
@@ -309,9 +310,8 @@ function loadEmployees(id){
     $.ajax({
         contentType : "application/json",
         dataType: 'json',
-        type: "POST",
-        url: '/departments-rest/employees.json',
-        data: JSON.stringify(id),
+        type: "GET",
+        url: '/departments-rest/emp/find/dep/' + id,
         complete : function (data){
             employees = processServerResponse(data.responseJSON, true);
             //populate employee list
@@ -331,7 +331,7 @@ function loadDepartmentOptions(){
         contentType: "application/json",
         dataType : "json",
         type: "GET",
-        url : '/departments-rest/departments_basic.json',
+        url : '/departments-rest/dep/find/all',
         complete : function (data){
             departments = processServerResponse(data.responseJSON, true);
             
@@ -356,7 +356,7 @@ function loadDepartments(activeId){
         contentType : "application/json",
         dataType: 'json',
         type: "GET",
-        url: '/departments-rest/departments.json',
+        url: '/departments-rest/dep/find/views',
         complete : function (data){
             departments = processServerResponse(data.responseJSON, true);
             //populate department list
@@ -385,7 +385,7 @@ function search(searchQuery){
         contentType : "application/json",
         dataType: 'json',
         type: "POST",
-        url: '/departments-rest/search.json',
+        url: '/departments-rest/emp/search',
         data: JSON.stringify(searchQuery),
         complete : function (data){
             employees = processServerResponse(data.responseJSON, false);

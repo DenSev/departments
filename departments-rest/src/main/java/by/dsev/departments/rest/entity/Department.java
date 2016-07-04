@@ -4,6 +4,7 @@ package by.dsev.departments.rest.entity;
  * Department entity, fields: id, name
  * @author DENIS SEVOSTEENKO
  */
+
 public class Department extends Entity{
 
     private static final long serialVersionUID = -8581790907777298148L;
@@ -40,6 +41,11 @@ public class Department extends Entity{
         } else if (!name.equals(other.name))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Department [name=" + name + "]";
     }
     
     

@@ -50,6 +50,7 @@ public class EmployeeServiceTest {
        ArgumentCaptor<Employee> arg = ArgumentCaptor.forClass(Employee.class);
        Employee employee = new Employee();
        employee.setFullName("test full name");
+       System.out.println(employee);
        employeeService.save(employee);
        //checks
        verify(employeeDao, Mockito.times(1)).create(arg.capture());

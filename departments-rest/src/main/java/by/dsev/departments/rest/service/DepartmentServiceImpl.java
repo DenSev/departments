@@ -20,14 +20,14 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Autowired
     private DepartmentDao departmentDao ;
     
-    @Autowired
+    /*@Autowired
     public DepartmentServiceImpl(DepartmentDao departmentDao) {
         this.departmentDao = departmentDao;
-    }
+    }*/
 
     @Override
     public void save(Department department) {
-        if(department.getId() != null){
+        if(department.getId() != 0){
             departmentDao.update(department);
         } else {
             departmentDao.create(department);

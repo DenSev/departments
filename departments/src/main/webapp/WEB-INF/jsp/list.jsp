@@ -80,7 +80,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="empModalLabel"><spring:message code="head.emp.s"/></h4>
             </div>
-            <div class="modal-body" id="null">
+            <div class="modal-body" id="0">
                 <div>
                     <label class="control-label"><spring:message code="card.emp.name"/></label>
                     <input id="empFullName" type="text" class="form-control"/>
@@ -121,7 +121,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="depModalLabel"><spring:message code="head.dep.s"/></h4>
             </div>
-            <div class="modal-body" id="null">
+            <div class="modal-body" id="0">
                 <div>
                     <label class="control-label"><spring:message code="card.dep.name"/></label>
                     <input id="depName" type="text" class="form-control"/>

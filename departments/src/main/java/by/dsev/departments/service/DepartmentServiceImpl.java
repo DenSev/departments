@@ -33,7 +33,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public void save(Department department) {
         try{
-            restTemplate.postForObject(serviceAddress + "department.json", department, ResponseForm.class);
+            restTemplate.postForObject(serviceAddress + "dep/save", department, ResponseForm.class);
         } catch(Exception e){
             LOG.error(e.getMessage(), e.getCause());
         }
@@ -41,7 +41,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public void remove(Long id) {
-        ResponseForm response  = restTemplate.exchange(serviceAddress + "department.json?id=" + id, HttpMethod.DELETE, null, 
+        ResponseForm response  = restTemplate.exchange(serviceAddress + "dep/remove/" + id, HttpMethod.DELETE, null, 
                                                         new ParameterizedTypeReference<ResponseForm>() {}).getBody();
         if(response.getResponseCode() == Constants.RESPONSE_CODE_ERROR_DELETION){
             throw new DataIntegrityViolationException("Cannot delete department");
@@ -52,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public Department find(Long id) {
         try{
-            ResponseForm<Department> response  = restTemplate .exchange(serviceAddress + "department.json?id=" + id, HttpMethod.GET, null, 
+            ResponseForm<Department> response  = restTemplate .exchange(serviceAddress + "dep/find/" + id, HttpMethod.GET, null, 
                                                                         new ParameterizedTypeReference<ResponseForm<Department>>() {}).getBody();
             return response.getResponseData();
         } catch(Exception e){
@@ -64,7 +64,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public List<DepartmentView> findAllViews() {
         try{
-            ResponseForm<List<DepartmentView>> response  = restTemplate .exchange(serviceAddress + "departments.json", HttpMethod.GET, null, 
+            ResponseForm<List<DepartmentView>> response  = restTemplate .exchange(serviceAddress + "dep/find/views", HttpMethod.GET, null, 
                                                                                     new ParameterizedTypeReference<ResponseForm<List<DepartmentView>>>() {}).getBody();
             return response.getResponseData();
         } catch(Exception e){
@@ -76,7 +76,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public List<Department> findAll() {
         try{
-            ResponseForm<List<Department>> response  = restTemplate .exchange(serviceAddress + "departments_basic.json", HttpMethod.GET, null, 
+            ResponseForm<List<Department>> response  = restTemplate .exchange(serviceAddress + "dep/find/all", HttpMethod.GET, null, 
                                                                                     new ParameterizedTypeReference<ResponseForm<List<Department>>>() {}).getBody();
             return response.getResponseData();
         } catch(Exception e){

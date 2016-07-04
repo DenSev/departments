@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.client.response.MockRestResponseCreators;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.dsev.departments.entity.Department;
 import by.dsev.departments.entity.view.DepartmentView;
@@ -56,7 +57,7 @@ public class DepartmentServiceTest {
         form.setResponseData(expected);
 
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/departments.json"))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/dep/find/views"))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 
@@ -78,7 +79,7 @@ public class DepartmentServiceTest {
         form.setResponseData(expected);
 
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/departments_basic.json"))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/dep/find/all"))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 
@@ -97,7 +98,7 @@ public class DepartmentServiceTest {
         department.setName("test department");
         ResponseForm form = new ResponseForm();
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/department.json"))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/dep/save"))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
                 .andExpect(MockRestRequestMatchers.jsonPath("$.id", is(1)))
                 .andExpect(MockRestRequestMatchers.jsonPath("$.name", is("test department")))
@@ -120,7 +121,7 @@ public class DepartmentServiceTest {
         form.setResponseData(department);
 
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/department.json?id=" + department.getId()))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/dep/find/" + department.getId()))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 
@@ -137,7 +138,7 @@ public class DepartmentServiceTest {
         ResponseForm form = new ResponseForm();
 
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/department.json?id=" + id))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/dep/remove/" + id))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.DELETE))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 
@@ -153,7 +154,7 @@ public class DepartmentServiceTest {
         ResponseForm form = new ResponseForm();
         form.setResponseCode(Constants.RESPONSE_CODE_ERROR_DELETION);
 
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/department.json?id=" + id))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/dep/remove/" + id))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.DELETE))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 

@@ -1,13 +1,18 @@
 package by.dsev.departments.rest.tests;
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.jboss.resteasy.core.Dispatcher;
+import org.jboss.resteasy.mock.MockDispatcherFactory;
+import org.jboss.resteasy.mock.MockHttpRequest;
+import org.jboss.resteasy.mock.MockHttpResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,51 +21,75 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import by.dsev.departments.rest.entity.Department;
 import by.dsev.departments.rest.entity.view.DepartmentView;
 import by.dsev.departments.rest.service.DepartmentService;
-import by.dsev.departments.rest.web.Constants;
+import by.dsev.departments.rest.service.DepartmentServiceImpl;
 import by.dsev.departments.rest.web.DepartmentRest;
+import by.dsev.departments.rest.web.ResponseForm;
 
 @ContextConfiguration(locations = "classpath:application-context-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class DepartmentRestTest {
 
-    
-
-    private MockMvc mockMvc;
 
     @Mock
-    private DepartmentService departmentService;
-    
+    private DepartmentService departmentService = new DepartmentServiceImpl();
+
     @InjectMocks
-    private DepartmentRest deaprtmentRest;
-    
+    private DepartmentRest departmentRest;
+
+    private Dispatcher dispatcher = MockDispatcherFactory.createDispatcher();
+    private ObjectMapper mapper = new ObjectMapper();
+
     /**
-     * set up mockito
+     * set up mockito and other stuff
      */
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         Mockito.reset(departmentService);
-        mockMvc = MockMvcBuilders.standaloneSetup(deaprtmentRest).build();
+        dispatcher.getRegistry().addSingletonResource(departmentRest);
     }
 
-    /**
-     * 
-     * @throws Exception 
-     */
+    @Test 
+    public void testFindAll() throws Exception{
+
+        MockHttpRequest request = MockHttpRequest.get("/dep/find/all");
+        MockHttpResponse response = new MockHttpResponse();
+        //prepare mocks
+        Department department = new Department();
+        department.setId(1l);
+        department.setName("test department");
+        List<Department> expectedDepartments = new ArrayList<Department>();
+        expectedDepartments.add(department);
+        when(departmentService.findAll()).thenReturn(expectedDepartments);
+        ResponseForm<List<Department>> form = new ResponseForm<List<Department>>();
+        form.setResponseData(expectedDepartments);
+
+        //call method to be tested
+        dispatcher.invoke(request, response);
+
+        //checks
+        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        verify(departmentService, times(1)).findAll();
+        verifyNoMoreInteractions(departmentService);
+        assertEquals(mapper.writeValueAsString(form), response.getContentAsString());
+
+    }
+
     @Test
     public void testFindAllViews() throws Exception{
 
+        MockHttpRequest request = MockHttpRequest.get("/dep/find/views");
+        MockHttpResponse response = new MockHttpResponse();
+
+        
         DepartmentView dv1 = new DepartmentView();
         dv1.setId(1l);
         dv1.setName("test 1");
@@ -73,104 +102,87 @@ public class DepartmentRestTest {
         dv2.setCount(2);
         dv2.setSalary(2000.0000);
 
-        when(departmentService.findAllViews()).thenReturn(Arrays.asList(dv1, dv2));
+        List<DepartmentView> expected = new ArrayList<DepartmentView>();
+        
+        when(departmentService.findAllViews()).thenReturn(expected);
+        ResponseForm<List<DepartmentView>> form = new ResponseForm<List<DepartmentView>>();
+        form.setResponseData(expected);
 
-        mockMvc.perform(get("/departments.json"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.responseCode", is(Constants.RESPONSE_CODE_SUCCESS)))
-                .andExpect(jsonPath("$.responseData", hasSize(2)))
-                .andExpect(jsonPath("$.responseData[0].id", is(1)))
-                .andExpect(jsonPath("$.responseData[0].name", is("test 1")))
-                .andExpect(jsonPath("$.responseData[0].count", is(1)))
-                .andExpect(jsonPath("$.responseData[0].salary", is(1000.0000)))
-                .andExpect(jsonPath("$.responseData[1].id", is(2)))
-                .andExpect(jsonPath("$.responseData[1].name", is("test 2")))
-                .andExpect(jsonPath("$.responseData[1].count", is(2)))
-                .andExpect(jsonPath("$.responseData[1].salary", is(2000.0000)));
+        //call method to be tested
+        dispatcher.invoke(request, response);
 
+        //checks
+        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
         verify(departmentService, times(1)).findAllViews();
         verifyNoMoreInteractions(departmentService);
+        assertEquals(mapper.writeValueAsString(form), response.getContentAsString());
+
     }
 
-    @Test
-    public void testFindAll() throws Exception{
-
-        Department dv1 = new Department();
-        dv1.setId(1l);
-        dv1.setName("test 1");
-
-        Department dv2 = new Department();
-        dv2.setId(2l);
-        dv2.setName("test 2");
-
-        when(departmentService.findAll()).thenReturn(Arrays.asList(dv1, dv2));
-
-        mockMvc.perform(get("/departments_basic.json"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.responseCode", is(Constants.RESPONSE_CODE_SUCCESS)))
-                .andExpect(jsonPath("$.responseData", hasSize(2)))
-                .andExpect(jsonPath("$.responseData[0].id", is(1)))
-                .andExpect(jsonPath("$.responseData[0].name", is("test 1")))
-                .andExpect(jsonPath("$.responseData[1].id", is(2)))
-                .andExpect(jsonPath("$.responseData[1].name", is("test 2")));
-
-        verify(departmentService, times(1)).findAll();
-        verifyNoMoreInteractions(departmentService);
-    }
-    
     @Test
     public void testFind() throws Exception{
-        ArgumentCaptor<Long> arg = ArgumentCaptor.forClass(Long.class);
-
         Department d = new Department();
         d.setId(1l);
         d.setName("test 1");
 
+        MockHttpRequest request = MockHttpRequest.get("/dep/find/" + d.getId());
+        MockHttpResponse response = new MockHttpResponse();
+
         when(departmentService.find(d.getId())).thenReturn(d);
+        ResponseForm<Department> form = new ResponseForm<Department>();
+        form.setResponseData(d);
 
-        mockMvc.perform(get("/department.json?id=" + d.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.responseCode", is(Constants.RESPONSE_CODE_SUCCESS)))
-                .andExpect(jsonPath("$.responseData.id", is(1)))
-                .andExpect(jsonPath("$.responseData.name", is("test 1")));
+        //call method to be tested
+        dispatcher.invoke(request, response);
 
-        verify(departmentService, times(1)).find(arg.capture());
+        //checks
+        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        verify(departmentService, times(1)).find(d.getId());
         verifyNoMoreInteractions(departmentService);
-        assertEquals(d.getId(), arg.getValue());
+        assertEquals(mapper.writeValueAsString(form), response.getContentAsString());
 
     }
     
     @Test
     public void testSave() throws Exception{
         ArgumentCaptor<Department> arg = ArgumentCaptor.forClass(Department.class);
-        ObjectMapper mapper = new ObjectMapper();
         
         Department department = new Department();
         department.setId(1l);
         department.setName("test 1");
+        ResponseForm form = new ResponseForm();
+        
+        MockHttpRequest request = MockHttpRequest.post("/dep/save");
+        MockHttpResponse response = new MockHttpResponse();
+        request.content(mapper.writeValueAsString(department).getBytes());
+        request.contentType(MediaType.APPLICATION_JSON);
+        
+        //call method to be tested
+        dispatcher.invoke(request, response);
 
-        mockMvc.perform(post("/department.json")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsBytes(department)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.responseCode", is(Constants.RESPONSE_CODE_SUCCESS)));
-
+        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
         verify(departmentService, times(1)).save(arg.capture());
         verifyNoMoreInteractions(departmentService);
         assertEquals(department, arg.getValue());
+        assertEquals(mapper.writeValueAsString(form), response.getContentAsString());
     }
     
     @Test
     public void testDelete() throws Exception{
         ArgumentCaptor<Long> arg = ArgumentCaptor.forClass(Long.class);
         Long id = 1l;
+        ResponseForm form = new ResponseForm();
 
-        mockMvc.perform(delete("/department.json?id=" + id))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.responseCode", is(Constants.RESPONSE_CODE_SUCCESS)));
+        MockHttpRequest request = MockHttpRequest.delete("/dep/remove/" + id);
+        MockHttpResponse response = new MockHttpResponse();
+        //call method to be tested
+        dispatcher.invoke(request, response);
 
+        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
         verify(departmentService, times(1)).remove(arg.capture());
         verifyNoMoreInteractions(departmentService);
         assertEquals(id, arg.getValue());
+        assertEquals(mapper.writeValueAsString(form), response.getContentAsString());
+
     }
 }

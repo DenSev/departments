@@ -1,10 +1,19 @@
 package by.dsev.departments.rest.entity;
 
 import java.util.Date;
+
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 /**
  * Employee entity, fields: id, fullName, dob (date of birth), salary, departmentId
  * @author DENIS SEVOSTEENKO
  */
+@JsonPropertyOrder({
+    "id",
+    "fullName",
+    "dob",
+    "salary",
+    "departmentId"
+})
 public class Employee extends Entity{
 
     private static final long serialVersionUID = -641963119356963519L;

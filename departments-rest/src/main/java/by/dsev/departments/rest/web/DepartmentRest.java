@@ -2,16 +2,19 @@ package by.dsev.departments.rest.web;
 
 import java.util.List;
 
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import by.dsev.departments.rest.entity.Department;
 import by.dsev.departments.rest.entity.view.DepartmentView;
@@ -24,38 +27,23 @@ import by.dsev.departments.rest.service.DepartmentService;
  *
  */
 @SuppressWarnings("rawtypes")
+@Path("/dep")
 @Controller
 public class DepartmentRest {
+
 
     private static final Logger LOG = LoggerFactory.getLogger(DepartmentRest.class);
     @Autowired
     private DepartmentService departmentService;
 
     /**
-     * retrieves all deparments formatted for view
-     * @return {@link ResponseForm} with a list of {@link DepartmentView} objects and response code
-     */
-    @ResponseBody
-    @RequestMapping(value = "/departments.json", method = RequestMethod.GET, produces="application/json")
-    public ResponseForm<List<DepartmentView>> findAllViews() {
-        ResponseForm<List<DepartmentView>> form = new ResponseForm<List<DepartmentView>>();
-        try{
-            form.setResponseData(departmentService.findAllViews());
-        } catch(Exception e){
-            e.printStackTrace();
-            LOG.error(e.getMessage(), e.getCause());
-            form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
-        }
-        return form;
-    }
-
-    /**
      * retrieves all departments 
      * @return {@link ResponseForm} with a list of {@link Department} objects and response code
      */
-    @ResponseBody
-    @RequestMapping(value = "/departments_basic.json", method = RequestMethod.GET, produces="application/json")
-    public ResponseForm<List<Department>> findAll() {
+    @GET
+    @Path("/find/all")
+    @Produces("application/json")
+    public Response findAll() {
         ResponseForm<List<Department>> form = new ResponseForm<List<Department>>();
         try{
             form.setResponseData(departmentService.findAll());
@@ -63,25 +51,25 @@ public class DepartmentRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
-
+    
     /**
-     * retrieves department by specified id
-     * @param id - id of desired department
-     * @return {@link ResponseForm} with a {@link Department} object and response code
+     * retrieves all deparments formatted for view
+     * @return {@link ResponseForm} with a list of {@link DepartmentView} objects and response code
      */
-    @ResponseBody
-    @RequestMapping(value = "/department.json", method = RequestMethod.GET, produces="application/json")
-    public ResponseForm<Department> find(@RequestParam Long id) {
-        ResponseForm<Department> form = new ResponseForm<Department>();
+    @GET
+    @Path("/find/views")
+    @Produces("application/json")
+    public Response findAllViews() {
+        ResponseForm<List<DepartmentView>> form = new ResponseForm<List<DepartmentView>>();
         try{
-            form.setResponseData(departmentService.find(id));
+            form.setResponseData(departmentService.findAllViews());
         } catch(Exception e){
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
     /**
@@ -89,9 +77,10 @@ public class DepartmentRest {
      * @param department - department to save, either a new one or an updated one
      * @return {@link ResponseForm} without any data and only responseCode
      */
-    @ResponseBody
-    @RequestMapping(value = "/department.json", method = RequestMethod.POST, produces="application/json")
-    public ResponseForm save(@RequestBody Department department) {
+    @POST
+    @Path("/save")
+    @Produces("application/json")
+    public Response save(Department department) {
         ResponseForm form = new ResponseForm();
         try{
             departmentService.save(department);
@@ -99,7 +88,26 @@ public class DepartmentRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
+    }
+    
+    /**
+     * retrieves department by specified id
+     * @param id - id of desired department
+     * @return {@link ResponseForm} with a {@link Department} object and response code
+     */
+    @GET
+    @Path("/find/{id}")
+    @Produces("application/json")
+    public Response find(@PathParam("id") Long id) {
+        ResponseForm<Department> form = new ResponseForm<Department>();
+        try{
+            form.setResponseData(departmentService.find(id));
+        } catch(Exception e){
+            LOG.error(e.getMessage(), e.getCause());
+            form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
+        }
+        return Response.status(200).entity(form).build();
     }
 
     /**
@@ -109,10 +117,11 @@ public class DepartmentRest {
      * object cannot be deleted which can later be used to throw exception or 
      * process the result some other way
      */
-    @ResponseBody
-    @RequestMapping(value = "/department.json", method = RequestMethod.DELETE, produces="application/json")
-    public ResponseForm remove(@RequestParam Long id) {
-        ResponseForm form = new ResponseForm();
+    @DELETE
+    @Path("/remove/{id}")
+    @Produces("application/json")
+    public Response remove(@PathParam("id") Long id) {
+        ResponseForm<Department> form = new ResponseForm<Department>();
         try{
             departmentService.remove(id);
         } catch(DataIntegrityViolationException e ) {
@@ -122,7 +131,7 @@ public class DepartmentRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
 }

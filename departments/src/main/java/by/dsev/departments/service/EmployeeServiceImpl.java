@@ -28,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public void save(Employee employee) {
         try{
-            restTemplate.postForObject( serviceAddress + "employee.json", employee, ResponseForm.class);
+            restTemplate.postForObject( serviceAddress + "emp/save", employee, ResponseForm.class);
         } catch(Exception e){
             LOG.error(e.getMessage(), e.getCause());
         }
@@ -36,18 +36,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public void remove(Long id) {
-        ResponseForm response  = restTemplate .exchange(serviceAddress + "employee.json?id=" + id, HttpMethod.DELETE, null, 
+        ResponseForm response  = restTemplate .exchange(serviceAddress + "emp/remove/" + id, HttpMethod.DELETE, null, 
                                                             new ParameterizedTypeReference<ResponseForm>() {}).getBody();
         if(response.getResponseCode() == Constants.RESPONSE_CODE_ERROR_DELETION){
             throw new DataIntegrityViolationException("Cannot delete employee");
         }
     }
 
-
     @Override
     public Employee find(Long id) {
         try{
-            ResponseForm<Employee> response  = restTemplate .exchange(serviceAddress + "employee.json?id=" + id, HttpMethod.GET, null, 
+            ResponseForm<Employee> response  = restTemplate .exchange(serviceAddress + "emp/find/" + id, HttpMethod.GET, null, 
                                                                         new ParameterizedTypeReference<ResponseForm<Employee>>() {}).getBody();
             return response.getResponseData();
         } catch(Exception e){
@@ -60,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public List<EmployeeView> findAllViews() {
         try{
-            ResponseForm<List<EmployeeView>> response = restTemplate .exchange(serviceAddress + "employees.json", HttpMethod.GET, null, 
+            ResponseForm<List<EmployeeView>> response = restTemplate .exchange(serviceAddress + "emp/find/views", HttpMethod.GET, null, 
                                                                         new ParameterizedTypeReference<ResponseForm<List<EmployeeView>>>() {}).getBody();
 
             return response.getResponseData();
@@ -74,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     public List<EmployeeView> searchByDate(SearchForm searchForm) {
         try{
             HttpEntity<SearchForm> request = new HttpEntity<>(searchForm);
-            ResponseForm<List<EmployeeView>> response = restTemplate .exchange(serviceAddress + "search.json", HttpMethod.POST, request, 
+            ResponseForm<List<EmployeeView>> response = restTemplate .exchange(serviceAddress + "emp/search", HttpMethod.POST, request, 
                                                                         new ParameterizedTypeReference<ResponseForm<List<EmployeeView>>>() {}).getBody();
             return response.getResponseData();
         } catch(Exception e){
@@ -82,7 +81,6 @@ public class EmployeeServiceImpl implements EmployeeService{
             return null;
         }
     }
-    
 
     public RestTemplate getRestTemplate() {
         return restTemplate;

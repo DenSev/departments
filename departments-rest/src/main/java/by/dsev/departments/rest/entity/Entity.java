@@ -10,7 +10,7 @@ import java.io.Serializable;
 public abstract class Entity implements Serializable{
 
     private static final long serialVersionUID = -7658700171798952185L;
-    private Long id;
+    private Long id = 0l;
 
     public Long getId() {
         return id;

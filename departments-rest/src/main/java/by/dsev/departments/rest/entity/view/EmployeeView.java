@@ -1,11 +1,20 @@
 package by.dsev.departments.rest.entity.view;
 
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+
 import by.dsev.departments.rest.entity.Entity;
 
 /**
  * View variant of Employee entity: department (name) instead of departmentId and string dob instead of date
  * @author DENIS SEVOSTEENKO
  */
+@JsonPropertyOrder({
+     "id",
+     "fullName",
+     "dob",
+     "salary",
+     "department"
+ })
 public class EmployeeView extends Entity{
     private static final long serialVersionUID = 8561756479132667470L;
     private String fullName;

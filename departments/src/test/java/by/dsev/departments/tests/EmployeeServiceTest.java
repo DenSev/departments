@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.client.response.MockRestResponseCreators;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.dsev.departments.entity.Employee;
 import by.dsev.departments.entity.view.EmployeeView;
@@ -59,7 +60,7 @@ public class EmployeeServiceTest {
         form.setResponseData(expected);
 
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/employees.json"))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/emp/find/views"))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 
@@ -78,7 +79,7 @@ public class EmployeeServiceTest {
         employee.setFullName("test employee");
         ResponseForm form = new ResponseForm();
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/employee.json"))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/emp/save"))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
                 .andExpect(MockRestRequestMatchers.jsonPath("$.id", is(1)))
                 .andExpect(MockRestRequestMatchers.jsonPath("$.fullName", is("test employee")))
@@ -101,7 +102,7 @@ public class EmployeeServiceTest {
         form.setResponseData(employee);
 
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/employee.json?id=" + employee.getId()))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/emp/find/" + employee.getId()))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 
@@ -119,7 +120,7 @@ public class EmployeeServiceTest {
 
 
         //prepare mock
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/employee.json?id=" + id))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/emp/remove/" + id))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.DELETE))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
 
@@ -134,15 +135,11 @@ public class EmployeeServiceTest {
         Long id = 1l;
         ResponseForm form = new ResponseForm();
         form.setResponseCode(Constants.RESPONSE_CODE_ERROR_DELETION);
-
-        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/employee.json?id=" + id))
+        mockServer.expect(MockRestRequestMatchers.requestTo("http://localhost:8080/departments-rest/emp/remove/" + id))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.DELETE))
                 .andRespond(MockRestResponseCreators.withSuccess(mapper.writeValueAsString(form), MediaType.APPLICATION_JSON));
-
         employeeService.remove(id);
-
         mockServer.verify();
-
     }
 
 }

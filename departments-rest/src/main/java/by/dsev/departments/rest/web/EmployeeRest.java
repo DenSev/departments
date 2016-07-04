@@ -4,16 +4,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import by.dsev.departments.rest.entity.Employee;
 import by.dsev.departments.rest.entity.SearchForm;
@@ -25,6 +28,7 @@ import by.dsev.departments.rest.service.EmployeeService;
  * @author DENIS SEVOSTEENKO
  */
 @SuppressWarnings("rawtypes")
+@Path("/emp")
 @Controller
 public class EmployeeRest {
 
@@ -36,9 +40,10 @@ public class EmployeeRest {
      * Retrieves all employees
      * @return {@link ResponseForm} with a list of {@link EmployeeView} objects and {@link Constants} responseCode
      */
-    @ResponseBody
-    @RequestMapping(value = "employees.json", method = RequestMethod.GET, produces="application/json")
-    public ResponseForm<List<EmployeeView>> findAll() {
+    @GET
+    @Path("/find/views")
+    @Produces("application/json")
+    public Response findAll() {
         ResponseForm<List<EmployeeView>> form = new ResponseForm<List<EmployeeView>>();
         try{
             form.setResponseData(employeeService.findAllViews());
@@ -46,7 +51,7 @@ public class EmployeeRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
     /**
@@ -54,10 +59,10 @@ public class EmployeeRest {
      * @param id - id of department, employees of which should be retrieved
      * @return {@link ResponseForm} with a list of {@link EmployeeView} objects and {@link Constants} responseCode
      */
-    
-    @ResponseBody
-    @RequestMapping(value = "employees.json", method = RequestMethod.POST, produces="application/json")
-    public ResponseForm<List<EmployeeView>> findAllByDepartmentId(@RequestBody Long id) {
+    @GET
+    @Path("/find/dep/{id}")
+    @Produces("application/json")
+    public Response findAllByDepartmentId(@PathParam("id") Long id) {
         ResponseForm<List<EmployeeView>> form = new ResponseForm<List<EmployeeView>>();
         try{
             form.setResponseData(employeeService.findAllViewsByDepartmentId(id));
@@ -65,7 +70,7 @@ public class EmployeeRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
     /**
@@ -73,9 +78,10 @@ public class EmployeeRest {
      * @param id - id of employee to be looked up in db
      * @return {@link ResponseForm} with {@link EmloyeeView} object and {@link Constants} responseCode
      */
-    @ResponseBody
-    @RequestMapping(value = "employee.json", method = RequestMethod.GET, produces="application/json")
-    public ResponseForm<Employee> find(@RequestParam Long id) {
+    @GET
+    @Path("/find/{id}")
+    @Produces("application/json")
+    public Response find(@PathParam("id") Long id) {
         ResponseForm<Employee> form = new ResponseForm<Employee>();
         try{
             form.setResponseData(employeeService.find(id));
@@ -83,7 +89,7 @@ public class EmployeeRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
     /**
@@ -91,9 +97,10 @@ public class EmployeeRest {
      * @param employee - employee to be save, may be either a new one or old one to be updated
      * @return {@link ResponseForm} without date and with only responseCode
      */
-    @ResponseBody
-    @RequestMapping(value = "employee.json", method = RequestMethod.POST, produces="application/json")
-    public ResponseForm save(@RequestBody Employee employee) {
+    @POST
+    @Path("/save")
+    @Produces("application/json")
+    public Response save(Employee employee) {
         ResponseForm form = new ResponseForm();
         try{
             employeeService.save(employee);
@@ -101,7 +108,7 @@ public class EmployeeRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
     /**
@@ -111,9 +118,10 @@ public class EmployeeRest {
      * and other isn't searches by equality comparison rather than interval
      * @return {@link ResponseForm} with list of {@link EmployeeView} results of search query
      */
-    @ResponseBody
-    @RequestMapping(value = "search.json", method = RequestMethod.POST, produces="application/json")
-    public ResponseForm<List<EmployeeView>> search(@RequestBody SearchForm searchForm) {
+    @POST
+    @Path("/search")
+    @Produces("application/json")
+    public Response search(SearchForm searchForm) {
         ResponseForm<List<EmployeeView>> form = new ResponseForm<List<EmployeeView>>();
         try{
             //strip local timezone from dates just in case
@@ -126,13 +134,12 @@ public class EmployeeRest {
                 Date endDate = format.parse(format.format(searchForm.getEndDate()));
                 searchForm.setEndDate(endDate);
             }
-
             form.setResponseData(employeeService.searchByDate(searchForm));
         } catch(Exception e){
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
     /**
@@ -142,9 +149,10 @@ public class EmployeeRest {
      * object cannot be deleted which can later be used to throw exception or 
      * process the result some other way
      */
-    @ResponseBody
-    @RequestMapping(value = "employee.json", method = RequestMethod.DELETE, produces="application/json")
-    public ResponseForm remove(@RequestParam Long id) {
+    @DELETE
+    @Path("/remove/{id}")
+    @Produces("application/json")
+    public Response remove(@PathParam("id") Long id) {
         ResponseForm form = new ResponseForm();
         try{
             employeeService.remove(id);
@@ -155,7 +163,7 @@ public class EmployeeRest {
             LOG.error(e.getMessage(), e.getCause());
             form.setResponseCode(Constants.RESPONSE_CODE_ERROR);
         }
-        return form;
+        return Response.status(200).entity(form).build();
     }
 
 }
