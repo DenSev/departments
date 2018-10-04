@@ -1,6 +1,6 @@
-package by.dsev.departments.entity.view;
+package com.densev.departments.entity.view;
 
-import by.dsev.departments.entity.Entity;
+import com.densev.departments.entity.Entity;
 
 /**
  * View variant of Employee entity: department (name) instead of departmentId and string dob instead of date

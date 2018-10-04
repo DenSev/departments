@@ -1,4 +1,4 @@
-package by.dsev.departments.service;
+package com.densev.departments.service;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import by.dsev.departments.entity.Department;
-import by.dsev.departments.entity.view.DepartmentView;
-import by.dsev.departments.web.Constants;
-import by.dsev.departments.web.ResponseForm;
+import com.densev.departments.entity.Department;
+import com.densev.departments.entity.view.DepartmentView;
+import com.densev.departments.web.Constants;
+import com.densev.departments.web.ResponseForm;
 
 
 /**

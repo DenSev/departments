@@ -1,4 +1,4 @@
-package by.dsev.departments.tests;
+package com.densev.departments.tests;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -20,11 +20,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import by.dsev.departments.entity.view.DepartmentView;
-import by.dsev.departments.entity.view.EmployeeView;
-import by.dsev.departments.service.DepartmentService;
-import by.dsev.departments.service.EmployeeService;
-import by.dsev.departments.web.IndexController;
+import com.densev.departments.entity.view.DepartmentView;
+import com.densev.departments.entity.view.EmployeeView;
+import com.densev.departments.service.DepartmentService;
+import com.densev.departments.service.EmployeeService;
+import com.densev.departments.web.IndexController;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

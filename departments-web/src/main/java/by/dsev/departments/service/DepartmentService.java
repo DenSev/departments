@@ -1,11 +1,11 @@
-package by.dsev.departments.service;
+package com.densev.departments.service;
 
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
-import by.dsev.departments.entity.Department;
-import by.dsev.departments.entity.view.DepartmentView;
+import com.densev.departments.entity.Department;
+import com.densev.departments.entity.view.DepartmentView;
 
 /**
  * Interface for interactions with REST services server and {@link Department} and {@link DepartmentView} objects

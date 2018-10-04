@@ -1,4 +1,4 @@
-package by.dsev.departments.tests;
+package com.densev.departments.tests;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -22,11 +22,11 @@ import org.springframework.test.web.client.response.MockRestResponseCreators;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import by.dsev.departments.entity.Employee;
-import by.dsev.departments.entity.view.EmployeeView;
-import by.dsev.departments.service.EmployeeServiceImpl;
-import by.dsev.departments.web.Constants;
-import by.dsev.departments.web.ResponseForm;
+import com.densev.departments.entity.Employee;
+import com.densev.departments.entity.view.EmployeeView;
+import com.densev.departments.service.EmployeeServiceImpl;
+import com.densev.departments.web.Constants;
+import com.densev.departments.web.ResponseForm;
 
 @ContextConfiguration(locations = "classpath:application-context-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)

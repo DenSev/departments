@@ -1,4 +1,4 @@
-package by.dsev.departments.web;
+package com.densev.departments.web;
 
 
 import java.util.List;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import by.dsev.departments.entity.Department;
-import by.dsev.departments.entity.Employee;
-import by.dsev.departments.entity.SearchForm;
-import by.dsev.departments.entity.view.EmployeeView;
-import by.dsev.departments.service.DepartmentService;
-import by.dsev.departments.service.EmployeeService;
+import com.densev.departments.entity.Department;
+import com.densev.departments.entity.Employee;
+import com.densev.departments.entity.SearchForm;
+import com.densev.departments.entity.view.EmployeeView;
+import com.densev.departments.service.DepartmentService;
+import com.densev.departments.service.EmployeeService;
 
 /**
  * Controller working with jsp pages and {@link Employee} and {@link EmployeeView} objects

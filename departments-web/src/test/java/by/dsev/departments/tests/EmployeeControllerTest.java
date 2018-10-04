@@ -1,4 +1,4 @@
-package by.dsev.departments.tests;
+package com.densev.departments.tests;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -22,11 +22,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import by.dsev.departments.entity.Employee;
-import by.dsev.departments.entity.SearchForm;
-import by.dsev.departments.entity.view.EmployeeView;
-import by.dsev.departments.service.EmployeeService;
-import by.dsev.departments.web.EmployeeController;
+import com.densev.departments.entity.Employee;
+import com.densev.departments.entity.SearchForm;
+import com.densev.departments.entity.view.EmployeeView;
+import com.densev.departments.service.EmployeeService;
+import com.densev.departments.web.EmployeeController;
 
 public class EmployeeControllerTest {
 

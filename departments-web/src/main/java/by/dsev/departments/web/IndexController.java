@@ -1,13 +1,13 @@
-package by.dsev.departments.web;
+package com.densev.departments.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import by.dsev.departments.entity.SearchForm;
-import by.dsev.departments.service.DepartmentService;
-import by.dsev.departments.service.EmployeeService;
+import com.densev.departments.entity.SearchForm;
+import com.densev.departments.service.DepartmentService;
+import com.densev.departments.service.EmployeeService;
 
 
 /**

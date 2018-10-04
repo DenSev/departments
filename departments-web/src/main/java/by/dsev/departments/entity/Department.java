@@ -1,4 +1,4 @@
-package by.dsev.departments.entity;
+package com.densev.departments.entity;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

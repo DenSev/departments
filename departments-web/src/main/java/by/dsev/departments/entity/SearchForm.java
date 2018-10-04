@@ -1,4 +1,4 @@
-package by.dsev.departments.entity;
+package com.densev.departments.entity;
 
 import java.io.Serializable;
 import java.util.Date;

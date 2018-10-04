@@ -1,4 +1,4 @@
-package by.dsev.departments.tests;
+package com.densev.departments.tests;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -21,9 +21,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import by.dsev.departments.entity.Department;
-import by.dsev.departments.service.DepartmentService;
-import by.dsev.departments.web.DepartmentController;
+import com.densev.departments.entity.Department;
+import com.densev.departments.service.DepartmentService;
+import com.densev.departments.web.DepartmentController;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:application-context-test.xml")
 @WebAppConfiguration

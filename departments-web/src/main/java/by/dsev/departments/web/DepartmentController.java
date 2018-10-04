@@ -1,4 +1,4 @@
-package by.dsev.departments.web;
+package com.densev.departments.web;
 
 import javax.validation.Valid;
 
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import by.dsev.departments.entity.Department;
-import by.dsev.departments.entity.view.DepartmentView;
-import by.dsev.departments.service.DepartmentService;
+import com.densev.departments.entity.Department;
+import com.densev.departments.entity.view.DepartmentView;
+import com.densev.departments.service.DepartmentService;
 
 /**
  * Controller working with jsp pages and {@link Department} and {@link DepartmentView} objects

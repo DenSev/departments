@@ -40,11 +40,11 @@
         </layout>
     </appender>
 
-    <logger name="by.dsev.departments">
+    <logger name="com.densev.departments">
         <level value="${log.level}"/>
     </logger>
 
-    <logger name="by.dsev.departments.dao">
+    <logger name="com.densev.departments.dao">
         <level value="${log.level.dao}"/>
     </logger>
 

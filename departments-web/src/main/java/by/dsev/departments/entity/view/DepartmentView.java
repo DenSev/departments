@@ -1,6 +1,6 @@
-package by.dsev.departments.entity.view;
+package com.densev.departments.entity.view;
 
-import by.dsev.departments.entity.Department;
+import com.densev.departments.entity.Department;
 
 /**
  * View wrapper over department, includes two additional fields: count and salary

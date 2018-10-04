@@ -1,12 +1,12 @@
-package by.dsev.departments.service;
+package com.densev.departments.service;
 
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
-import by.dsev.departments.entity.Employee;
-import by.dsev.departments.entity.SearchForm;
-import by.dsev.departments.entity.view.EmployeeView;
+import com.densev.departments.entity.Employee;
+import com.densev.departments.entity.SearchForm;
+import com.densev.departments.entity.view.EmployeeView;
 
 /**
  * Interface for interactions with REST services server and {@link Employee} and {@link EmployeeView} objects

@@ -1,4 +1,4 @@
-package by.dsev.departments.web;
+package com.densev.departments.web;
 
 
 /**
