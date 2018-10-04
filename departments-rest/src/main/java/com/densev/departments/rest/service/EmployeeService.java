@@ -13,9 +13,9 @@ import com.densev.departments.rest.entity.view.EmployeeView;
  */
 public interface EmployeeService {
 
-    void save(Employee employee);
+    Employee save(Employee employee);
     
-    void remove(Long id);
+    boolean remove(Long id);
     
     Employee find(Long id);
     

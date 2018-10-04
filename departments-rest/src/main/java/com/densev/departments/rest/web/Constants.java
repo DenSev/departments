@@ -6,6 +6,7 @@ package com.densev.departments.rest.web;
  * @author DENIS SEVOSTEENKO
  *
  */
+@Deprecated
 public class Constants {
     public static final int RESPONSE_CODE_SUCCESS = 0;
     public static final int RESPONSE_CODE_ERROR = -1;

@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author DENIS SEVOSTEENKO
  */
-@Path("/departments")
+@Path("/api/departments")
 @Component
 public class DepartmentRest {
 
@@ -40,7 +40,6 @@ public class DepartmentRest {
      * @return {@link ResponseForm} with a list of {@link Department} objects and response code
      */
     @GET
-    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         List<Department> departments = departmentService.findAll();
@@ -67,7 +66,6 @@ public class DepartmentRest {
      * @return {@link ResponseForm} without any data and only responseCode
      */
     @POST
-    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response save(Department department) {
         department = departmentService.save(department);

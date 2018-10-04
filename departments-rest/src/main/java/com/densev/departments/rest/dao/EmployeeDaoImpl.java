@@ -5,11 +5,13 @@ import com.densev.departments.rest.entity.SearchForm;
 import com.densev.departments.rest.entity.view.EmployeeView;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.TemporalType;
 import java.util.List;
 
 /**
@@ -41,7 +43,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public List<EmployeeView> readAllViews() {
         try (Session session = sessionFactory.openSession()) {
             List<EmployeeView> employeeViews = session
-                .createQuery("select e.id, e.fullName, e.dateOfBirth, e.salary, d.name as department " +
+                .createQuery("select new com.densev.departments.rest.entity.view.EmployeeView(e.id, e.fullName, e.dateOfBirth, e.salary, d.name ) " +
                     "from Employee e " +
                     "left join Department d on e.department = d " +
                     "order by e.id", EmployeeView.class)
@@ -54,7 +56,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public List<EmployeeView> readAllViewsByDepartmentId(Long id) {
         try (Session session = sessionFactory.openSession()) {
             List<EmployeeView> employeeViews = session
-                .createQuery("select e.id, e.fullName, e.dateOfBirth, e.salary, d.name as department " +
+                .createQuery("select new com.densev.departments.rest.entity.view.EmployeeView(e.id, e.fullName, e.dateOfBirth, e.salary, d.name) " +
                     "from Employee e " +
                     "left join Department d on e.department = :id " +
                     "order by e.id", EmployeeView.class)
@@ -66,17 +68,39 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public List<EmployeeView> searchByDate(SearchForm form) {
+        //FIXME fix edge date
         try (Session session = sessionFactory.openSession()) {
-            List<EmployeeView> employeeViews = session
-                .createQuery("select e.id, e.fullName, e.dateOfBirth, e.salary, d.name as department " +
+            StringBuilder stringBuilder = new StringBuilder(
+                "select new com.densev.departments.rest.entity.view.EmployeeView(" +
+                    "e.id, " +
+                    "e.fullName, " +
+                    "e.dateOfBirth, " +
+                    "e.salary, " +
+                    "d.name" +
+                    ") " +
                     "from Employee e " +
-                    "left join Department d on e.department = d " +
-                    "where e.dateOfBirth >= :startDate " +
-                    "and e.dateOfBirth <= :endDate " +
-                    "order by e.id", EmployeeView.class)
-                .setParameter("startDate", form.getStartDate())
-                .setParameter("endDate", form.getEndDate())
-                .list();
+                    "left join Department d on e.department = d where ");
+            if (form.getStartDate() != null) {
+                stringBuilder.append("DATE(e.dateOfBirth) >= DATE(:startDate) ");
+                if (form.getEndDate() != null) {
+                    stringBuilder.append("and ");
+                }
+            }
+            if (form.getEndDate() != null) {
+                stringBuilder.append("DATE(e.dateOfBirth) <= DATE(:endDate) ");
+            }
+            stringBuilder.append("order by e.id");
+
+            Query<EmployeeView> employeeViewQuery = session
+                .createQuery(stringBuilder.toString(), EmployeeView.class);
+            if (form.getStartDate() != null) {
+                employeeViewQuery.setParameter("startDate", form.getStartDate(), TemporalType.DATE);
+            }
+            if (form.getEndDate() != null) {
+                employeeViewQuery.setParameter("endDate", form.getEndDate(), TemporalType.DATE);
+            }
+
+            List<EmployeeView> employeeViews = employeeViewQuery.list();
             return employeeViews;
         }
         /*<select id="searchByDate" resultMap="employeeView" parameterType="searchForm">

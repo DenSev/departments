@@ -8,7 +8,7 @@
     <resultMap type="employee" id="employee">
         <id column="id" property="id"/>
         <result column="full_name" property="fullName"/>
-        <result column="date_of_birth" property="dob"/>
+        <result column="date_of_birth" property="dateOfBirth"/>
         <result column="salary" property="salary"/>
         <result column="department_id" property="departmentId"/>
     </resultMap>
@@ -16,7 +16,7 @@
     <resultMap type="employeeView" id="employeeView">
         <id column="id" property="id"/>
         <result column="full_name" property="fullName"/>
-        <result column="date_of_birth" property="dob"/>
+        <result column="date_of_birth" property="dateOfBirth"/>
         <result column="salary" property="salary"/>
         <result column="department" property="department"/>
     </resultMap>
@@ -25,7 +25,7 @@
     <insert id="create" parameterType="employee" keyProperty="id">
         INSERT INTO ${db.schema}.employees
           (full_name, date_of_birth, salary, department_id)
-        VALUES (#{fullName}, #{dob}, #{salary}, #{departmentId})
+        VALUES (#{fullName}, #{dateOfBirth}, #{salary}, #{departmentId})
     </insert>
 
     <select id="read" resultMap="employee" parameterType="long">
@@ -38,7 +38,7 @@
         UPDATE ${db.schema}.employees 
         SET
           full_name = #{fullName},
-          date_of_birth = #{dob},
+          date_of_birth = #{dateOfBirth},
           salary = #{salary},
           department_id = #{departmentId}
         WHERE id = #{id}

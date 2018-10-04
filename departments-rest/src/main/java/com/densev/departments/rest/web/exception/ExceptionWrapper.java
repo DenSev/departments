@@ -10,7 +10,6 @@ public class ExceptionWrapper {
     private ExceptionWrapper(Builder builder) {
         this.statusCode = builder.statusCode;
         this.errorMessage = builder.errorMessage;
-
     }
 
     public Response.Status getStatusCode() {

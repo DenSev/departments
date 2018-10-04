@@ -6,7 +6,7 @@
 
   <script type="text/javascript">
       $(function() {
-          $('#dob').datetimepicker({
+          $('#dateOfBirth').datetimepicker({
               viewMode: 'years',
               format: 'YYYY-MM-DD'
           });
@@ -24,11 +24,11 @@
                 <form:input class="form-control" path="fullName"/>
                 <form:errors path="fullName" cssClass="alert alert-danger" />
             </div>
-            <form:label path="dob"><spring:message code="card.emp.dob"/></form:label>
-            <div class='form-group input-group date' id='dob'>
+            <form:label path="dateOfBirth"><spring:message code="card.emp.dateOfBirth"/></form:label>
+            <div class='form-group input-group date' id='dateOfBirth'>
                 
-                <form:input type='text' class="form-control" path="dob"/>
-                <form:errors path="dob" cssClass="alert alert-danger" />
+                <form:input type='text' class="form-control" path="dateOfBirth"/>
+                <form:errors path="dateOfBirth" cssClass="alert alert-danger" />
                 <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
                 </span>

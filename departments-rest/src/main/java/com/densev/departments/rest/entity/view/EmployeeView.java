@@ -6,25 +6,42 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
- * View variant of Employee entity: department (name) instead of departmentId and string dob instead of date
+ * View variant of Employee entity: department (name) instead of departmentId and string dateOfBirth instead of date
  *
  * @author DENIS SEVOSTEENKO
  */
 @JsonPropertyOrder({
     "id",
     "fullName",
-    "dob",
+    "dateOfBirth",
     "salary",
     "department"
 })
 public class EmployeeView extends Entity {
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private static final long serialVersionUID = 8561756479132667470L;
     private String fullName;
-    private String dob;
+    private String dateOfBirth;
     private Integer salary;
     private String department;
 
+    public EmployeeView() {
+    }
+
+    public EmployeeView(long id, String fullName, Date dateOfBirth, int salary, String department) {
+        super(id);
+        this.fullName = fullName;
+        if (dateOfBirth != null) {
+            this.dateOfBirth = DATE_FORMAT.format(dateOfBirth);
+        }
+        this.salary = salary;
+        this.department = department;
+    }
 
     public String getFullName() {
         return fullName;
@@ -34,12 +51,12 @@ public class EmployeeView extends Entity {
         this.fullName = fullName;
     }
 
-    public String getDob() {
-        return dob;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Integer getSalary() {

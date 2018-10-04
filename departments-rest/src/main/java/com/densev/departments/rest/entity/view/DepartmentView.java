@@ -13,20 +13,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class DepartmentView extends Department {
 
     private static final long serialVersionUID = -874063191438611202L;
-    private Integer count;
+    private Long count;
     private Double salary;
 
-    public DepartmentView(long id, String name, int count, Double salary) {
+    public DepartmentView(long id, String name, long count, double salary) {
         super(id, name);
         this.count = count;
         this.salary = salary;
     }
 
-    public Integer getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 

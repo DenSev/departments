@@ -72,14 +72,14 @@ public class EmployeeRestTest {
             EmployeeView emp1 = new EmployeeView();
             emp1.setId(1l);
             emp1.setFullName("test 1");
-            emp1.setDob("1999-01-01");
+            emp1.setDateOfBirth("1999-01-01");
             emp1.setSalary(1000);
             emp1.setDepartment("department 1");
             
             EmployeeView emp2 = new EmployeeView();
             emp2.setId(2l);
             emp2.setFullName("test 2");
-            emp2.setDob("1999-02-02");
+            emp2.setDateOfBirth("1999-02-02");
             emp2.setSalary(2000);
             emp2.setDepartment("department 2");
 
@@ -111,14 +111,14 @@ public class EmployeeRestTest {
             EmployeeView emp1 = new EmployeeView();
             emp1.setId(1l);
             emp1.setFullName("test 1");
-            emp1.setDob("1999-01-01");
+            emp1.setDateOfBirth("1999-01-01");
             emp1.setSalary(1000);
             emp1.setDepartment(dep.getName());
             
             EmployeeView emp2 = new EmployeeView();
             emp2.setId(2l);
             emp2.setFullName("test 2");
-            emp2.setDob("1999-02-02");
+            emp2.setDateOfBirth("1999-02-02");
             emp2.setSalary(2000);
             emp2.setDepartment(dep.getName());
             

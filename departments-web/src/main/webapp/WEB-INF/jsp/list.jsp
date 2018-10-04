@@ -60,7 +60,7 @@
         <div>
             <ul>
                 <li class="list-group-item-heading"><h4 id="name"><spring:message code="card.emp.name"/></h4></li>
-                <li id="dob"><spring:message code="card.emp.dob"/></li>
+                <li id="dateOfBirth"><spring:message code="card.emp.dateOfBirth"/></li>
                 <li id="salary"><spring:message code="card.emp.sal"/></li>
                 <li id="department"><spring:message code="card.emp.dep"/></li>
             </ul>
@@ -87,7 +87,7 @@
                     
                 </div>
                 <div class="alert alert-danger hidden" id="empNameAlert"></div>
-                <label class="control-label"><spring:message code="card.emp.dob"/></label>
+                <label class="control-label"><spring:message code="card.emp.dateOfBirth"/></label>
                 <div class='input-group date' id='dobPicker'>
                     <input id="empDob" type='text' class="form-control" />
                     <span class="input-group-addon">

@@ -7,6 +7,7 @@ package com.densev.departments.rest.web;
  * @param <Data> - data type
  * @author DENIS SEVOSTEENKO
  */
+@Deprecated
 public class ResponseForm<Data> {
 
     private int responseCode = Constants.RESPONSE_CODE_SUCCESS;

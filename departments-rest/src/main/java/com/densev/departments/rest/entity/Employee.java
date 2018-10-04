@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
@@ -26,11 +27,24 @@ import java.util.Date;
 public class Employee extends Entity {
 
     private static final long serialVersionUID = -641963119356963519L;
+    @Column(name="full_name")
     private String fullName;
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
     private Integer salary;
     @ManyToOne
     private Department department;
+
+    public Employee() {
+    }
+
+    public Employee(long id, String fullName, Date dateOfBirth, Integer salary, Department department) {
+        super(id);
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.salary = salary;
+        this.department = department;
+    }
 
     public String getFullName() {
         return fullName;

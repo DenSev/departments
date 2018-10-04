@@ -41,7 +41,7 @@
                     <div>
                         <ul>
                             <li class="list-group-item-heading"><h4><spring:message code="card.emp.name"/>${employee.fullName}</h4></li>
-                            <li><spring:message code="card.emp.dob"/>${employee.dob}</li>
+                            <li><spring:message code="card.emp.dateOfBirth"/>${employee.dateOfBirth}</li>
                             <li><spring:message code="card.emp.sal"/>${employee.salary}</li>
                             <li><spring:message code="card.emp.dep"/>${employee.department}</li>
                         </ul>

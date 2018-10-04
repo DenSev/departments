@@ -26,17 +26,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void save(Employee employee) {
+    public Employee save(Employee employee) {
         if (employee.getId() != 0) {
-            employeeDao.update(employee);
+            return employeeDao.update(employee);
         } else {
-            employeeDao.create(employee);
+            return employeeDao.create(employee);
         }
     }
 
     @Override
-    public void remove(Long id) {
-        employeeDao.delete(id);
+    public boolean remove(Long id) {
+        return employeeDao.delete(id);
     }
 
     @Override
