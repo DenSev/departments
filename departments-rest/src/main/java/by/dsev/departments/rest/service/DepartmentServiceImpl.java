@@ -1,42 +1,41 @@
 package by.dsev.departments.rest.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import by.dsev.departments.rest.dao.DepartmentDao;
 import by.dsev.departments.rest.entity.Department;
 import by.dsev.departments.rest.entity.view.DepartmentView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Implementation of {@link DepartmentService}, used for rest services
- * @author DENIS
  *
+ * @author DENIS
  */
 @Service
-public class DepartmentServiceImpl implements DepartmentService{
+public class DepartmentServiceImpl implements DepartmentService {
+
+
+    private final DepartmentDao departmentDao;
 
     @Autowired
-    private DepartmentDao departmentDao ;
-    
-    /*@Autowired
     public DepartmentServiceImpl(DepartmentDao departmentDao) {
         this.departmentDao = departmentDao;
-    }*/
+    }
 
     @Override
-    public void save(Department department) {
-        if(department.getId() != 0){
-            departmentDao.update(department);
+    public Department save(Department department) {
+        if (department.getId() != 0) {
+            return departmentDao.update(department);
         } else {
-            departmentDao.create(department);
+            return departmentDao.create(department);
         }
     }
 
     @Override
-    public void remove(Long id) {
-        departmentDao.delete(id);
+    public boolean remove(Long id) {
+        return departmentDao.delete(id);
     }
 
     @Override

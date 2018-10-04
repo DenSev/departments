@@ -12,7 +12,7 @@ public interface CRUD <K, T>{
      * writes a new entity to db
      * @param t - entity to be created
      */
-    void create(T t);
+    T create(T t);
 
     /**
      * reads an entity from db
@@ -25,12 +25,12 @@ public interface CRUD <K, T>{
      * updates an entity in db
      * @param t - entity to be updated
      */
-    void update(T t);
+    T update(T t);
 
     /**
      * deletes an entity from db
      * @param k - key by which the entity is deleted
      */
-    void delete(K k);
+    boolean delete(K k);
 
 }

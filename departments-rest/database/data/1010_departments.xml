@@ -8,16 +8,16 @@
 
     <changeSet id="0.0.1_1010" author="Denis Sevosteenko">
         <comment>Insert data into table "departments"</comment>
-        <insert tableName="departments" schemaName="${db.schema}">
+        <insert tableName="departments" schemaName="departments">
             
             <column name="name">administration</column>
         </insert>
-        <insert tableName="departments" schemaName="${db.schema}">
+        <insert tableName="departments" schemaName="departments">
             
             <column name="name">management</column>
         </insert>
         <rollback>
-            <delete tableName="departments" schemaName="${db.schema}"/>
+            <delete tableName="departments" schemaName="departments"/>
         </rollback>
     </changeSet>
 

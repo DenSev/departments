@@ -52,7 +52,7 @@ public class EmployeeDaoTest {
 
         Employee e1 = new Employee();
         e1.setFullName("test");
-        e1.setDob(date);
+        e1.setDateOfBirth(date);
         e1.setSalary(1000);
         e1.setDepartmentId(d.getId());
 
@@ -79,7 +79,7 @@ public class EmployeeDaoTest {
         ev.setFullName(e1.getFullName());
         ev.setSalary(e1.getSalary());
         ev.setDepartment(d.getName());
-        ev.setDob(fmt.format(e1.getDob()));
+        ev.setDob(fmt.format(e1.getDateOfBirth()));
 
         List<EmployeeView> views = employeeDao.readAllViews();
         assertTrue(views.contains(ev));

@@ -8,92 +8,92 @@
 
     <changeSet id="0.0.1_1020" author="Denis Sevosteenko">
         <comment>Insert data into table "employees"</comment>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Ivanov Ivan Ivanovich</column>
             <column name="date_of_birth">1980.01.01</column>
             <column name="salary">10000</column>
             <column name="department_id">1</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Petrov Petr Petrovich</column>
             <column name="date_of_birth">1966.06.04</column>
             <column name="salary">15000</column>
             <column name="department_id">1</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Orlov Orel</column>
             <column name="date_of_birth">1977.07.07</column>
             <column name="salary">16000</column>
             <column name="department_id">1</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Smirnov Smirnov</column>
             <column name="date_of_birth">1983.01.01</column>
             <column name="salary">7000</column>
             <column name="department_id">1</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Semen Semenovich</column>
             <column name="date_of_birth">1983.12.14</column>
             <column name="salary">8000</column>
             <column name="department_id">1</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Spiridenko Nikolai Ivanovich</column>
             <column name="date_of_birth">1980.01.01</column>
             <column name="salary">6000</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Antonov Anton Anotonovich</column>
             <column name="date_of_birth">1984.01.01</column>
             <column name="salary">1000</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Abdulov Abdula</column>
             <column name="date_of_birth">1981.01.01</column>
             <column name="salary">000</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Simanko Lev Lvovich</column>
             <column name="date_of_birth">1982.01.01</column>
             <column name="salary">1000</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Grigoriev Grigorievich</column>
             <column name="date_of_birth">1983.01.01</column>
             <column name="salary">2000</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Aliev Alik Masudovich</column>
             <column name="date_of_birth">1984.01.01</column>
             <column name="salary">6000</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Vesnetskiy Vladislav Igorevech</column>
             <column name="date_of_birth">1985.01.01</column>
             <column name="salary">9900</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Simonov Artyom Grigorievich</column>
             <column name="date_of_birth">1986.01.01</column>
             <column name="salary">600</column>
             <column name="department_id">2</column>
         </insert>
-        <insert tableName="employees" schemaName="${db.schema}">
+        <insert tableName="employees" schemaName="departments">
             <column name="full_name">Ivashko Aleksandr Petrovich</column>
             <column name="date_of_birth">1987.01.01</column>
             <column name="salary">5555</column>
             <column name="department_id">2</column>
         </insert>
         <rollback>
-            <delete tableName="employees" schemaName="${db.schema}"/>
+            <delete tableName="employees" schemaName="departments"/>
         </rollback>
     </changeSet>
 

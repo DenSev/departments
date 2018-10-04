@@ -1,16 +1,34 @@
 package by.dsev.departments.rest.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
  * Basic entity, Serializable
- * @author DENIS SEVOSTEENKO
  *
+ * @author DENIS SEVOSTEENKO
  */
-public abstract class Entity implements Serializable{
+@MappedSuperclass
+public abstract class Entity implements Serializable {
 
     private static final long serialVersionUID = -7658700171798952185L;
-    private Long id = 0l;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id = 0L;
+
+    public Entity() {
+    }
+
+    public Entity(long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -22,27 +40,17 @@ public abstract class Entity implements Serializable{
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Entity other = (Entity) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

@@ -1,16 +1,20 @@
 package by.dsev.departments.rest.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
  * Search form for search query
+ *
  * @author DENIS SEVOSTEENKO
  */
-public class SearchForm implements Serializable{
+public class SearchForm implements Serializable {
 
     private static final long serialVersionUID = 6312325614317880709L;
 
@@ -22,44 +26,32 @@ public class SearchForm implements Serializable{
     public Date getStartDate() {
         return startDate;
     }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
     public Date getEndDate() {
         return endDate;
     }
+
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-        result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
     }
+
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        SearchForm other = (SearchForm) obj;
-        if (endDate == null) {
-            if (other.endDate != null)
-                return false;
-        } else if (!endDate.equals(other.endDate))
-            return false;
-        if (startDate == null) {
-            if (other.startDate != null)
-                return false;
-        } else if (!startDate.equals(other.startDate))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 }

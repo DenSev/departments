@@ -1,29 +1,33 @@
 package by.dsev.departments.rest.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import by.dsev.departments.rest.dao.EmployeeDao;
 import by.dsev.departments.rest.entity.Employee;
 import by.dsev.departments.rest.entity.SearchForm;
 import by.dsev.departments.rest.entity.view.EmployeeView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Implementation of {@link EmployeeService}, used for rest services
- * @author DENIS SEVOSTEENKO
  *
+ * @author DENIS SEVOSTEENKO
  */
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
+
+
+    private final EmployeeDao employeeDao;
 
     @Autowired
-    private EmployeeDao employeeDao;
-    
+    public EmployeeServiceImpl(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
+
     @Override
     public void save(Employee employee) {
-        if(employee.getId() != 0) {
+        if (employee.getId() != 0) {
             employeeDao.update(employee);
         } else {
             employeeDao.create(employee);

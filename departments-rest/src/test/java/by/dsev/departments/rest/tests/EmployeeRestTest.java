@@ -150,7 +150,7 @@ public class EmployeeRestTest {
             Employee emp = new Employee();
             emp.setId(1l);
             emp.setFullName("test 1");
-            emp.setDob(dob);
+            emp.setDateOfBirth(dob);
             emp.setSalary(1000);
             emp.setDepartmentId(1l);
 
@@ -181,7 +181,7 @@ public class EmployeeRestTest {
             Employee emp = new Employee();
             emp.setId(1l);
             emp.setFullName("test 1");
-            emp.setDob(new Date());
+            emp.setDateOfBirth(new Date());
             emp.setDepartmentId(1l);
             emp.setSalary(1000);
 

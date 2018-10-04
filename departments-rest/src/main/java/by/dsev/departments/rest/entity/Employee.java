@@ -1,10 +1,17 @@
 package by.dsev.departments.rest.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
 /**
  * Employee entity, fields: id, fullName, dob (date of birth), salary, departmentId
+ *
  * @author DENIS SEVOSTEENKO
  */
 @JsonPropertyOrder({
@@ -14,78 +21,62 @@ import org.codehaus.jackson.annotate.JsonPropertyOrder;
     "salary",
     "departmentId"
 })
-public class Employee extends Entity{
+@javax.persistence.Entity
+@Table(name = "employees")
+public class Employee extends Entity {
 
     private static final long serialVersionUID = -641963119356963519L;
     private String fullName;
-    private Date dob;
+    private Date dateOfBirth;
     private Integer salary;
-    private Long departmentId;
-    
+    @ManyToOne
+    private Department department;
+
     public String getFullName() {
         return fullName;
     }
+
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    public Date getDob() {
-        return dob;
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
-    public void setDob(Date dob) {
-        this.dob = dob;
+
+    public void setDateOfBirth(Date dob) {
+        this.dateOfBirth = dob;
     }
+
     public Integer getSalary() {
         return salary;
     }
+
     public void setSalary(Integer salary) {
         this.salary = salary;
     }
-    public Long getDepartmentId() {
-        return departmentId;
+
+    public Department getDepartment() {
+        return department;
     }
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((departmentId == null) ? 0 : departmentId.hashCode());
-        result = prime * result + ((dob == null) ? 0 : dob.hashCode());
-        result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
-        result = prime * result + ((salary == null) ? 0 : salary.hashCode());
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
     }
+
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Employee other = (Employee) obj;
-        if (departmentId == null) {
-            if (other.departmentId != null)
-                return false;
-        } else if (!departmentId.equals(other.departmentId))
-            return false;
-        if (dob == null) {
-            if (other.dob != null)
-                return false;
-        } else if (!dob.equals(other.dob))
-            return false;
-        if (fullName == null) {
-            if (other.fullName != null)
-                return false;
-        } else if (!fullName.equals(other.fullName))
-            return false;
-        if (salary == null) {
-            if (other.salary != null)
-                return false;
-        } else if (!salary.equals(other.salary))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
     }
-    
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 }

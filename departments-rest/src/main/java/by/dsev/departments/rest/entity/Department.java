@@ -1,14 +1,30 @@
 package by.dsev.departments.rest.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import javax.persistence.Table;
+
 /**
  * Department entity, fields: id, name
+ *
  * @author DENIS SEVOSTEENKO
  */
-
-public class Department extends Entity{
+@javax.persistence.Entity
+@Table(name = "departments")
+public class Department extends Entity {
 
     private static final long serialVersionUID = -8581790907777298148L;
     private String name;
+
+    public Department() {
+    }
+
+    public Department(long id, String name) {
+        super(id);
+        this.name = name;
+    }
 
     public String getName() {
         return name;
@@ -20,33 +36,17 @@ public class Department extends Entity{
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Department other = (Department) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
     }
 
     @Override
     public String toString() {
-        return "Department [name=" + name + "]";
+        return ToStringBuilder.reflectionToString(this);
     }
-    
-    
+
 }

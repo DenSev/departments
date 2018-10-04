@@ -12,9 +12,9 @@ import by.dsev.departments.rest.entity.view.DepartmentView;
  */
 public interface DepartmentService {
 
-    void save(Department department);
+    Department save(Department department);
 
-    void remove(Long id);
+    boolean remove(Long id);
 
     Department find(Long id);
 

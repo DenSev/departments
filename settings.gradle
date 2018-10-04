@@ -1,0 +1,3 @@
+rootProject.name = 'departments'
+include 'departments-rest'
+include 'departments-web'
