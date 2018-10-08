@@ -1,10 +1,13 @@
 package com.densev.departments.rest.service;
 
+import com.densev.departments.rest.api.dto.EmployeeDTO;
 import com.densev.departments.rest.dao.EmployeeDao;
 import com.densev.departments.rest.entity.Employee;
-import com.densev.departments.rest.entity.SearchForm;
+import com.densev.departments.rest.api.SearchForm;
 import com.densev.departments.rest.entity.view.EmployeeView;
+import com.densev.departments.rest.service.converter.ConversionConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,19 +22,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     private final EmployeeDao employeeDao;
+    private final ConversionService conversionService;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDao employeeDao) {
+    public EmployeeServiceImpl(EmployeeDao employeeDao,
+                               ConversionService conversionService) {
         this.employeeDao = employeeDao;
+        this.conversionService = conversionService;
     }
 
     @Override
-    public Employee save(Employee employee) {
+    public EmployeeDTO save(Employee employee) {
         if (employee.getId() != 0) {
-            return employeeDao.update(employee);
+            employee = employeeDao.update(employee);
         } else {
-            return employeeDao.create(employee);
+            employee = employeeDao.create(employee);
         }
+        return conversionService.convert(employee, EmployeeDTO.class);
     }
 
     @Override
@@ -40,28 +47,43 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee find(Long id) {
-        return employeeDao.read(id);
+    public EmployeeDTO find(Long id) {
+        Employee employee = employeeDao.read(id);
+        return conversionService.convert(employee, EmployeeDTO.class);
     }
 
     @Override
-    public List<Employee> findAll() {
-        return employeeDao.readAll();
+    public List<EmployeeDTO> findAll() {
+        List<Employee> employees = employeeDao.readAll();
+        return (List<EmployeeDTO>) conversionService.convert(employees,
+            ConversionConstants.EMPLOYEE_LIST,
+            ConversionConstants.EMPLOYEE_DTO_LIST);
     }
 
     @Override
-    public List<EmployeeView> findAllViews() {
-        return employeeDao.readAllViews();
+    public List<EmployeeDTO> findAllViews() {
+        List<EmployeeView> employeeViews = employeeDao.readAllViews();
+        return (List<EmployeeDTO>) conversionService.convert(employeeViews,
+            ConversionConstants.EMPLOYEE_VIEW_LIST,
+            ConversionConstants.EMPLOYEE_DTO_LIST);
     }
 
     @Override
-    public List<EmployeeView> findAllViewsByDepartmentId(Long id) {
-        return employeeDao.readAllViewsByDepartmentId(id);
+    public List<EmployeeDTO> findAllViewsByDepartmentId(Long id) {
+        List<EmployeeView> employeeViews = employeeDao.readAllViewsByDepartmentId(id);
+        return (List<EmployeeDTO>) conversionService.convert(employeeViews,
+            ConversionConstants.EMPLOYEE_VIEW_LIST,
+            ConversionConstants.EMPLOYEE_DTO_LIST);
+
     }
 
     @Override
-    public List<EmployeeView> searchByDate(SearchForm form) {
-        return employeeDao.searchByDate(form);
+    public List<EmployeeDTO> searchByDate(SearchForm form) {
+        List<EmployeeView> employeeViews = employeeDao.searchByDate(form);
+        return (List<EmployeeDTO>) conversionService.convert(employeeViews,
+            ConversionConstants.EMPLOYEE_VIEW_LIST,
+            ConversionConstants.EMPLOYEE_DTO_LIST);
+
     }
 
 }

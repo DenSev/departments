@@ -3,7 +3,7 @@ package com.densev.departments.rest.dao;
 import java.util.List;
 
 import com.densev.departments.rest.entity.Employee;
-import com.densev.departments.rest.entity.SearchForm;
+import com.densev.departments.rest.api.SearchForm;
 import com.densev.departments.rest.entity.view.EmployeeView;
 
 /**

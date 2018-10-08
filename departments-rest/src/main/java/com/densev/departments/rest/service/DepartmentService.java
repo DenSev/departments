@@ -2,6 +2,7 @@ package com.densev.departments.rest.service;
 
 import java.util.List;
 
+import com.densev.departments.rest.api.dto.DepartmentDTO;
 import com.densev.departments.rest.dao.DepartmentDao;
 import com.densev.departments.rest.entity.Department;
 import com.densev.departments.rest.entity.view.DepartmentView;
@@ -12,13 +13,13 @@ import com.densev.departments.rest.entity.view.DepartmentView;
  */
 public interface DepartmentService {
 
-    Department save(Department department);
+    DepartmentDTO save(Department department);
 
     boolean remove(Long id);
 
-    Department find(Long id);
+    DepartmentDTO find(Long id);
 
-    List<Department> findAll();
+    List<DepartmentDTO> findAll();
 
-    List<DepartmentView> findAllViews();
+    List<DepartmentDTO> findAllViews();
 }

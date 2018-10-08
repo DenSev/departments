@@ -1,41 +1,10 @@
 package com.densev.departments.rest.tests;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
-
-import com.densev.departments.rest.entity.Department;
-import com.densev.departments.rest.entity.view.DepartmentView;
-import com.densev.departments.rest.service.DepartmentService;
-import com.densev.departments.rest.service.DepartmentServiceImpl;
-import com.densev.departments.rest.web.DepartmentRest;
-import com.densev.departments.rest.web.ResponseForm;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.jboss.resteasy.core.Dispatcher;
-import org.jboss.resteasy.mock.MockDispatcherFactory;
-import org.jboss.resteasy.mock.MockHttpRequest;
-import org.jboss.resteasy.mock.MockHttpResponse;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-
-@ContextConfiguration(locations = "classpath:application-context-test.xml")
+/*@ContextConfiguration(locations = "classpath:application-context-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
+@WebAppConfiguration*/
 public class DepartmentRestTest {
-
+/*
 
     @Mock
     private DepartmentService departmentService = new DepartmentServiceImpl();
@@ -46,9 +15,9 @@ public class DepartmentRestTest {
     private Dispatcher dispatcher = MockDispatcherFactory.createDispatcher();
     private ObjectMapper mapper = new ObjectMapper();
 
-    /**
+    *//**
      * set up mockito and other stuff
-     */
+     *//*
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
@@ -183,5 +152,5 @@ public class DepartmentRestTest {
         assertEquals(id, arg.getValue());
         assertEquals(mapper.writeValueAsString(form), response.getContentAsString());
 
-    }
+    }*/
 }

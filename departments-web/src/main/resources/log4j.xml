@@ -16,30 +16,6 @@
         </layout>
     </appender>
 
-    <appender name="MAIL_ERROR_FILE" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${catalina.base}/logs/${app.name}.mail.errors.log" />
-        <param name="DatePattern" value="'.'yyyy-MM-dd" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} %-5p %c: %m%n" />
-        </layout>
-    </appender>
-
-    <appender name="SMS_ERROR_FILE" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${catalina.base}/logs/${app.name}.sms.errors.log" />
-        <param name="DatePattern" value="'.'yyyy-MM-dd" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} %-5p %c: %m%n" />
-        </layout>
-    </appender>
-
-    <appender name="SENSOR_ERROR_FILE" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${catalina.base}/logs/${app.name}.sensor.errors.log" />
-        <param name="DatePattern" value="'.'yyyy-MM-dd" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} %-5p %c: %m%n" />
-        </layout>
-    </appender>
-
     <logger name="com.densev.departments">
         <level value="${log.level}"/>
     </logger>

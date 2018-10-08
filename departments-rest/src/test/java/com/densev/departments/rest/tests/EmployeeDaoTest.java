@@ -1,34 +1,11 @@
 package com.densev.departments.rest.tests;
 
-import static org.junit.Assert.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import com.densev.departments.rest.dao.DepartmentDao;
-import com.densev.departments.rest.dao.EmployeeDao;
-import com.densev.departments.rest.entity.Department;
-import com.densev.departments.rest.entity.Employee;
-import com.densev.departments.rest.entity.SearchForm;
-import com.densev.departments.rest.entity.view.EmployeeView;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-@ContextConfiguration(locations = "classpath:application-context-test.xml")
+/*@ContextConfiguration(locations = "classpath:application-context-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)*/
 public class EmployeeDaoTest {
-    
+/*
+
     private static final Logger LOG = LoggerFactory.getLogger(EmployeeDaoTest.class);
     @Autowired
     private EmployeeDao employeeDao;
@@ -99,4 +76,5 @@ public class EmployeeDaoTest {
         assertTrue(!deps.contains(e1));
     }
 
+*/
 }

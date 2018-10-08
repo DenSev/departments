@@ -1,5 +1,6 @@
 package com.densev.departments.rest.web.exception;
 
+import com.densev.departments.rest.api.Message;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,9 @@ public class ExceptionHandler extends Throwable implements ExceptionMapper<Throw
         return Response
             .status(ExceptionMappings.getStatus(exception))
             .entity(
-                ExceptionWrapper.builder()
-                    .statusCode(ExceptionMappings.getStatus(exception))
-                    .errorMessage(returnStackTrace ? ExceptionUtils.getStackTrace(exception) : ExceptionUtils.getRootCauseMessage(exception))
+                Message.builder()
+                    .header(String.valueOf(ExceptionMappings.getStatus(exception)))
+                    .message(returnStackTrace ? ExceptionUtils.getStackTrace(exception) : ExceptionUtils.getRootCauseMessage(exception))
                     .build()
             )
             .type(MediaType.APPLICATION_JSON)

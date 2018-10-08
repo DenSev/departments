@@ -1,14 +1,16 @@
 package com.densev.departments.rest.web;
 
+import com.densev.departments.rest.api.Message;
+import com.densev.departments.rest.api.SearchForm;
+import com.densev.departments.rest.api.dto.EmployeeDTO;
 import com.densev.departments.rest.entity.Employee;
-import com.densev.departments.rest.entity.SearchForm;
 import com.densev.departments.rest.entity.view.EmployeeView;
 import com.densev.departments.rest.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -40,23 +42,23 @@ public class EmployeeRest {
     @Path("/employees/views")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
-        List<EmployeeView> employeeViews = employeeService.findAllViews();
-        return Response.ok().entity(employeeViews).build();
+        List<EmployeeDTO> employees = employeeService.findAllViews();
+        return Response.ok().entity(employees).build();
     }
 
     @GET
     @Path("/{id}/employees/views")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllByDepartmentId(@PathParam("id") Long id) {
-        List<EmployeeView> employeeViews = employeeService.findAllViewsByDepartmentId(id);
-        return Response.ok().entity(employeeViews).build();
+        List<EmployeeDTO> employees = employeeService.findAllViewsByDepartmentId(id);
+        return Response.ok().entity(employees).build();
     }
 
     @GET
     @Path("/employees/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") Long id) {
-        Employee employee = employeeService.find(id);
+        EmployeeDTO employee = employeeService.find(id);
         return Response.ok().entity(employee).build();
     }
 
@@ -64,8 +66,8 @@ public class EmployeeRest {
     @Path("/employees")
     @Produces(MediaType.APPLICATION_JSON)
     public Response save(Employee employee) {
-        employee = employeeService.save(employee);
-        return Response.ok().entity(employee).build();
+        EmployeeDTO employeeDTO = employeeService.save(employee);
+        return Response.ok().entity(employeeDTO).build();
     }
 
     @GET
@@ -85,8 +87,8 @@ public class EmployeeRest {
                 searchForm.setEndDate(eDate);
             }
 
-            List<EmployeeView> employeeViews = employeeService.searchByDate(searchForm);
-            return Response.status(200).entity(employeeViews).build();
+            List<EmployeeDTO> employees = employeeService.searchByDate(searchForm);
+            return Response.status(200).entity(employees).build();
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -98,9 +100,19 @@ public class EmployeeRest {
     public Response remove(@PathParam("id") Long id) {
         final boolean removed = employeeService.remove(id);
         if (!removed) {
-            return Response.notModified().entity("Error removing").build();
+            return Response
+                .notModified()
+                .entity(Message.builder()
+                    .header(HttpStatus.NOT_MODIFIED.getReasonPhrase())
+                    .message("Could not remove employee"))
+                .build();
         }
-        return Response.ok().entity("Success").build();
+        return Response
+            .ok()
+            .entity(Message.builder()
+                .header(HttpStatus.OK.getReasonPhrase())
+                .message("Successfully removed employee"))
+            .build();
     }
 
 }

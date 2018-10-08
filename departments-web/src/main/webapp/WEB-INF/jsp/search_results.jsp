@@ -14,14 +14,14 @@
           });
       });
   </script>
-<c:url value="/employee/search.html" var="search"/>
-
-<c:url value="/employee/edit.html" var="empEdit"/>
-<c:url value="/employee/new.html" var="empNew"/>
-<c:url value="/employee/delete.html" var="empDelete"/>
+<c:url value="/departments/employees/search" var="search"/>
+<c:url value="/departments/employees" var="empEdit"/>
+<c:url value="/departments/employees" var="empNew"/>
+<c:url value="/departments/employees" var="empDelete"/>
 
 <div class="container">
     <div class="custom-heading">
+        <%--@elvariable id="searchForm" type="com.densev.departments.entity.SearchForm"--%>
         <form:form modelAttribute="searchForm" action="${search}" method="POST">
             <div class="input-group">
                 <form:input id="date1" path="startDate" class="form-control" placeholder="Date 1"/>

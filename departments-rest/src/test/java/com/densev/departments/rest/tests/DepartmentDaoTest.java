@@ -1,28 +1,11 @@
 package com.densev.departments.rest.tests;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
-import com.densev.departments.rest.dao.DepartmentDao;
-import com.densev.departments.rest.entity.Department;
-import com.densev.departments.rest.entity.view.DepartmentView;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-@ContextConfiguration(locations = "classpath:application-context-test.xml")
+/*@ContextConfiguration(locations = "classpath:application-context-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)*/
 public class DepartmentDaoTest {
-    
+/*
+
     private static final Logger LOG = LoggerFactory.getLogger(DepartmentDaoTest.class);
     @Autowired
     private DepartmentDao departmentDao;
@@ -64,5 +47,6 @@ public class DepartmentDaoTest {
         deps = departmentDao.readAll();
         assertTrue(!deps.contains(d1));
     }
+*/
 
 }

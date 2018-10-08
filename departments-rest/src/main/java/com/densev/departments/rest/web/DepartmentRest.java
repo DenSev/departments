@@ -1,5 +1,6 @@
 package com.densev.departments.rest.web;
 
+import com.densev.departments.rest.api.dto.DepartmentDTO;
 import com.densev.departments.rest.entity.Department;
 import com.densev.departments.rest.entity.view.DepartmentView;
 import com.densev.departments.rest.service.DepartmentService;
@@ -36,26 +37,22 @@ public class DepartmentRest {
 
     /**
      * retrieves all departments
-     *
-     * @return {@link ResponseForm} with a list of {@link Department} objects and response code
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
-        List<Department> departments = departmentService.findAll();
+        List<DepartmentDTO> departments = departmentService.findAll();
         return Response.ok().entity(departments).build();
     }
 
     /**
      * retrieves all deparments formatted for view
-     *
-     * @return {@link ResponseForm} with a list of {@link DepartmentView} objects and response code
      */
     @GET
     @Path("/views")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllViews() {
-        List<DepartmentView> views = departmentService.findAllViews();
+        List<DepartmentDTO> views = departmentService.findAllViews();
         return Response.ok().entity(views).build();
     }
 
@@ -63,35 +60,32 @@ public class DepartmentRest {
      * saves specified department
      *
      * @param department - department to save, either a new one or an updated one
-     * @return {@link ResponseForm} without any data and only responseCode
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response save(Department department) {
-        department = departmentService.save(department);
-        return Response.ok().entity(department).build();
+        DepartmentDTO departmentDTO = departmentService.save(department);
+        return Response.ok().entity(departmentDTO).build();
     }
 
     /**
      * retrieves department by specified id
      *
      * @param id - id of desired department
-     * @return {@link ResponseForm} with a {@link Department} object and response code
      */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") Long id) {
-        Department department = departmentService.find(id);
+        DepartmentDTO department = departmentService.find(id);
         return Response.status(200).entity(department).build();
     }
 
     /**
      * @param id - id of department to be deleted
-     * @return {@link ResponseForm} without responseData and only responseCode.
-     * Returns {@link Constants} if the desired
-     * object cannot be deleted which can later be used to throw exception or
-     * process the result some other way
+     *           <p>
+     *           object cannot be deleted which can later be used to throw exception or
+     *           process the result some other way
      */
     @DELETE
     @Path("/{id}")

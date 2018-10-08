@@ -1,9 +1,12 @@
 package com.densev.departments.rest.service;
 
+import com.densev.departments.rest.api.dto.DepartmentDTO;
 import com.densev.departments.rest.dao.DepartmentDao;
 import com.densev.departments.rest.entity.Department;
 import com.densev.departments.rest.entity.view.DepartmentView;
+import com.densev.departments.rest.service.converter.ConversionConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,21 +19,24 @@ import java.util.List;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-
     private final DepartmentDao departmentDao;
+    private final ConversionService conversionService;
 
     @Autowired
-    public DepartmentServiceImpl(DepartmentDao departmentDao) {
+    public DepartmentServiceImpl(DepartmentDao departmentDao,
+                                 ConversionService conversionService) {
+        this.conversionService = conversionService;
         this.departmentDao = departmentDao;
     }
 
     @Override
-    public Department save(Department department) {
+    public DepartmentDTO save(Department department) {
         if (department.getId() != 0) {
-            return departmentDao.update(department);
+            department = departmentDao.update(department);
         } else {
-            return departmentDao.create(department);
+            department = departmentDao.create(department);
         }
+        return conversionService.convert(department, DepartmentDTO.class);
     }
 
     @Override
@@ -39,18 +45,26 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department find(Long id) {
-        return departmentDao.read(id);
+    public DepartmentDTO find(Long id) {
+        Department department = departmentDao.read(id);
+        return conversionService.convert(department, DepartmentDTO.class);
     }
 
     @Override
-    public List<Department> findAll() {
-        return departmentDao.readAll();
+    public List<DepartmentDTO> findAll() {
+        List<Department> departments = departmentDao.readAll();
+        return (List<DepartmentDTO>) conversionService.convert(departments,
+            ConversionConstants.DEPARTMENT_LIST,
+            ConversionConstants.DEPARTMENT_DTO_LIST);
     }
 
     @Override
-    public List<DepartmentView> findAllViews() {
-        return departmentDao.readAllViews();
+    public List<DepartmentDTO> findAllViews() {
+        List<DepartmentView> departments = departmentDao.readAllViews();
+        return (List<DepartmentDTO>) conversionService.convert(departments,
+            ConversionConstants.DEPARTMENT_VIEW_LIST,
+            ConversionConstants.DEPARTMENT_DTO_LIST);
+
     }
 
 }

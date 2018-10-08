@@ -16,6 +16,9 @@ public class DepartmentView extends Department {
     private Long count;
     private Double salary;
 
+    public DepartmentView() {
+    }
+
     public DepartmentView(long id, String name, long count, double salary) {
         super(id, name);
         this.count = count;

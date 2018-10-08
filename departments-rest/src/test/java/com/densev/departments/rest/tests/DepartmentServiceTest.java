@@ -1,30 +1,21 @@
 package com.densev.departments.rest.tests;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.densev.departments.rest.dao.DepartmentDao;
 import com.densev.departments.rest.entity.Department;
 import com.densev.departments.rest.entity.view.DepartmentView;
 import com.densev.departments.rest.service.DepartmentServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.context.ContextConfiguration;
+import org.mockito.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
-@ContextConfiguration(locations = "classpath:application-context-test.xml")
-@RunWith(MockitoJUnitRunner.class)
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+import static org.testng.Assert.assertEquals;
+
 public class DepartmentServiceTest {
-
     @Mock
     private DepartmentDao departmentDao;
 
@@ -34,27 +25,32 @@ public class DepartmentServiceTest {
     /**
      * set up mockito
      */
-    @Before
-    public void setUp(){
+    @BeforeTest
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @AfterMethod
+    public void reset() {
+        Mockito.reset(departmentDao);
     }
 
     /**
      * test saving a new department (id == null), verify departmentDao.create was called and departmentDao.update wasn't
      */
     @Test
-    public void testSaveNew(){
+    public void testSaveNew() {
         ArgumentCaptor<Department> arg = ArgumentCaptor.forClass(Department.class);
         Department department = new Department();
         department.setName("test department");
         departmentService.save(department);
         //checks
-        verify(departmentDao, Mockito.times(1)).create(arg.capture());
-        verify(departmentDao, Mockito.times(0)).update(arg.capture());
+        verify(departmentDao, times(1)).create(arg.capture());
+        verify(departmentDao, times(0)).update(arg.capture());
         assertEquals(department, arg.getValue());
         verifyNoMoreInteractions(departmentDao);
     }
-    
+
     /**
      * test saving existing department (id != null), verify departmentDao.update was called and departmentDao.create wasn't
      */
@@ -66,8 +62,8 @@ public class DepartmentServiceTest {
         department.setName("test department");
         departmentService.save(department);
         //checks
-        verify(departmentDao, Mockito.times(0)).create(arg.capture());
-        verify(departmentDao, Mockito.times(1)).update(arg.capture());
+        verify(departmentDao, times(0)).create(arg.capture());
+        verify(departmentDao, times(1)).update(arg.capture());
         assertEquals(department, arg.getValue());
         verifyNoMoreInteractions(departmentDao);
     }
@@ -113,7 +109,7 @@ public class DepartmentServiceTest {
         Department department = new Department();
         department.setId(1l);
         department.setName("test department");
-        List<Department> expectedDepartments = new ArrayList<Department>();
+        List<Department> expectedDepartments = new ArrayList<>();
         expectedDepartments.add(department);
         when(departmentDao.readAll()).thenReturn(expectedDepartments);
         List<Department> gotDepartments = departmentService.findAll();
@@ -122,14 +118,14 @@ public class DepartmentServiceTest {
         verify(departmentDao, times(1)).readAll();
         verifyNoMoreInteractions(departmentDao);
     }
-    
+
     /**
      * test findAllViews comparing factual and expected results
      */
     @Test
     public void testFindAllViews(){
         DepartmentView department = new DepartmentView();
-        department.setId(1l);
+        department.setId(1L);
         department.setName("test department");
         List<DepartmentView> expectedDepartments = new ArrayList<DepartmentView>();
         expectedDepartments.add(department);
